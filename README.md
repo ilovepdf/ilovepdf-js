@@ -24,6 +24,14 @@ You can install the library via [NPM](https://www.npmjs.com). Run the following 
 npm install @ilovepdf/ilovepdf-js
 ```
 
+Also, if you are working with old browsers that don't have support for Promise objects, we recomend install the dependency [promise-polyfill](https://www.npmjs.com/package/promise-polyfill):
+
+```bash
+npm install promise-polyfill
+```
+
+Remember that this package needs to be imported somewhere in your project or this polyfill won't be applied.
+
 ## Getting Started
 
 Simple usage looks like:
