@@ -1,0 +1,18 @@
+{
+  "name": "@ilovepdf/ilovepdf-js",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@ilovepdf/ilovepdf-core": "file:../ilovepdf-core"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
