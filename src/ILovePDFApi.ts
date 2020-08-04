@@ -1,4 +1,4 @@
-import Task, { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
+import { TaskParams, TaskI } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
 import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/dist/tasks/TaskFactory";
 import Auth from "@ilovepdf/ilovepdf-core/dist/auth/Auth";
 import JWT from "@ilovepdf/ilovepdf-core/dist/auth/JWT";
@@ -12,7 +12,7 @@ export interface ILovePDFApiI {
      * @param taskType - Task to run.
      * @param params - Parameters for the tool.
      */
-    newTask: (taskType: ILovePDFTool, params?: TaskParams) => Task;
+    newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
 }
 
 export default class ILovePDFApi implements ILovePDFApiI {
