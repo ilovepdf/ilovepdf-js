@@ -6,7 +6,7 @@ import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
 import XHRPromise from "./XHRPromise";
 import XHRInterface from "@ilovepdf/ilovepdf-core/dist/utils/XHRInterface";
 
-interface ILovePDFApiI {
+export interface ILovePDFApiI {
     /**
      * Creates a new task for a specific tool.
      * @param taskType - Task to run.
