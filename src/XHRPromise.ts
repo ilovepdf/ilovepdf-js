@@ -1,4 +1,5 @@
 import XHRInterface, { Options } from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
+import ILovePDFFile from './ILovePDFFile';
 
 export default class XHRPromise implements XHRInterface {
 
@@ -6,15 +7,17 @@ export default class XHRPromise implements XHRInterface {
         return XHRPromise.makeRequest<T>('GET', url, undefined, options);
     }
 
-    public post<T>(url: string, data?: any, options?: Options) {
-        return XHRPromise.makeRequest<T>('POST', url, JSON.stringify(data), options);
+    public post<T>(url: string, data?: any, options: Options = {}) {
+        // If there is a file, it needs to retrieve native data.
+        const parsedData = data instanceof ILovePDFFile ? data.data : data;
+        return XHRPromise.makeRequest<T>('POST', url, parsedData, options);
     }
 
-    public put<T>(url: string, data?: any, options?: Options) {
-        return XHRPromise.makeRequest<T>('PUT', url, JSON.stringify(data), options);
+    public put<T>(url: string, data?: any, options: Options = {}) {
+        return XHRPromise.makeRequest<T>('PUT', url, data, options);
     }
 
-    public delete<T>(url: string, options?: Options) {
+    public delete<T>(url: string, options: Options = {}) {
         return XHRPromise.makeRequest<T>('DELETE', url, undefined, options);
     }
 
@@ -22,7 +25,9 @@ export default class XHRPromise implements XHRInterface {
         return new Promise<T>(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open(method, url, true);
+            console.log(options);
             XHRPromise.setHeaders(xhr, options);
+            XHRPromise.setEncoding(xhr, options);
 
             // Success handling.
             xhr.onload = function () {
@@ -75,23 +80,22 @@ export default class XHRPromise implements XHRInterface {
         });
     }
 
-    private static setHeaders(xhr: XMLHttpRequest, options?: Options) {
-        // Content-Type header for JSON response.
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    private static setHeaders(xhr: XMLHttpRequest, options: Options = {}) {
+        if (!!options.headers) {
+            // Mandatory to not have errors.
+            xhr.withCredentials = true;
 
-        // Authorization headers.
-        if (!!options) {
-            if (!!options.headers) {
-                // Mandatory to not have errors.
-                xhr.withCredentials = true;
+            options.headers.forEach(([ key, value ]) => {
+                xhr.setRequestHeader(key, value);
+            });
 
-                options.headers.forEach(([ key, value ]) => {
-                    xhr.setRequestHeader(key, value);
-                });
-
-            }
         }
 
     }
+
+    private static setEncoding(xhr: XMLHttpRequest, options: Options = {}) {
+        // Enable arraybuffer as a return type when binary is enabled.
+        if (!!options.binary) xhr.responseType = 'arraybuffer';
+    };
 
 }

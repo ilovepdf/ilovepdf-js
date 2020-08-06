@@ -26,7 +26,7 @@ export default class ILovePDFApi implements ILovePDFApiI {
         this.taskFactory = new TaskFactory();
     }
 
-    public newTask(taskType: ILovePDFTool, params: TaskParams = {}) {
+    public newTask(taskType: ILovePDFTool, params: TaskParams = {}): TaskI {
         return this.taskFactory.newTask(taskType, this.auth, this.xhr, params);
     }
 
