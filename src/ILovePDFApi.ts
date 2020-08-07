@@ -1,10 +1,11 @@
-import { TaskParams, TaskI } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
+import { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
 import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/dist/tasks/TaskFactory";
 import Auth from "@ilovepdf/ilovepdf-core/dist/auth/Auth";
 import JWT from "@ilovepdf/ilovepdf-core/dist/auth/JWT";
 import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
 import XHRPromise from "./XHRPromise";
 import XHRInterface from "@ilovepdf/ilovepdf-core/dist/utils/XHRInterface";
+import TaskI from "@ilovepdf/ilovepdf-core/dist/tasks/TaskI";
 
 export interface ILovePDFApiI {
     /**
