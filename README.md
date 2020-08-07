@@ -39,7 +39,7 @@ Remember that this package needs to be imported somewhere in your project or thi
 ```js
 import ILovePDFApi from '@ilovepdf/ilovepdf-js';
 
-const instance = new ILovePDFApi('<PUBLIC_KEY>', '<PRIVATE_KEY>');
+const instance = new ILovePDFApi('<PUBLIC_KEY>');
 
 // Public and secret key can be found in your developer panel
 // at https://developer.ilovepdf.com/user/projects .
