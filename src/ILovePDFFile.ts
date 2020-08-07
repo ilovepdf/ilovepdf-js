@@ -1,11 +1,11 @@
-import BaseFile from "@ilovepdf/ilovepdf-core/dist/tasks/BaseFile";
+import BaseFile, { BaseFileParams } from "@ilovepdf/ilovepdf-core/dist/tasks/BaseFile";
 
 export default class ILovePDFFile extends BaseFile {
     private file: File;
 
-    constructor(file: File) {
+    constructor(file: File, params?: BaseFileParams) {
         const filename = file.name;
-        super('', '', filename);
+        super('', '', filename, params);
 
         // Keep data.
         this.file = file;
