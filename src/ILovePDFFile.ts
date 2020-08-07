@@ -7,7 +7,7 @@ export default class ILovePDFFile extends BaseFile {
         const filename = file.name;
         super('', '', filename);
 
-        // Save as a form data.
+        // Keep data.
         this.file = file;
     }
 
