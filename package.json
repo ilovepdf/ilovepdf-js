@@ -22,5 +22,8 @@
     "dotenv": "^8.2.0",
     "jest": "^26.2.2",
     "typescript": "^3.8.3"
+  },
+  "jest": {
+    "testTimeout": 10000
   }
 }
