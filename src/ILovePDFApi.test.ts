@@ -3,6 +3,7 @@ import ILovePDFFile from "./ILovePDFFile";
 import dotenv from 'dotenv';
 import XHRPromise from "./XHRPromise";
 import MERGE from './tests/output/merge';
+import CONNECT from "./tests/output/connect";
 
 // Load env vars.
 dotenv.config();
@@ -47,13 +48,14 @@ describe('ILovePDFApi', () => {
         it('process a merge', async () => {
             const task = api.newTask('merge');
             const file = await createFileToAdd();
+            const file2 = await createFileToAdd();
 
             return task.start()
             .then(() => {
                 return task.addFile(file);
             })
             .then(() => {
-                return task.addFile(file);
+                return task.addFile(file2);
             })
             .then(() => {
                 return task.process();
@@ -82,12 +84,90 @@ describe('ILovePDFApi', () => {
                 const buffer = data as unknown as ArrayBuffer;
                 const utf8String = arrayBufferToString(buffer);
                 const ut8WithoutMetas = removePDFUniqueMetadata(utf8String);
-
                 const base64 = btoa(ut8WithoutMetas);
 
                 expect(base64).toBe(MERGE);
             });
         });
+
+        it('connects a task', async () => {
+            const task = api.newTask('split');
+            const file = await createFileToAdd();
+
+            return task.start()
+            .then(task => {
+                return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+            })
+            .then(task => {
+                return task.addFile(file);
+            })
+            .then(task => {
+                return task.process();
+            })
+            .then(task =>{
+                return task.connect('merge');
+            })
+            .then((connectedTask) => {
+                return connectedTask.addFile(file);
+            })
+            .then((connectedTask) => {
+                return connectedTask.process()
+            })
+            .then((connectedTask) => {
+                return connectedTask.download();
+            })
+            .then(data => {
+                // Cast to native ArrayBuffer because is not only a simple string.
+                const buffer = data as unknown as ArrayBuffer;
+                const utf8String = arrayBufferToString(buffer);
+                const ut8WithoutMetas = removePDFUniqueMetadata(utf8String);
+                const base64 = btoa(ut8WithoutMetas);
+                expect(base64).toBe(CONNECT);
+            });
+        });
+
+        it('deletes a task', async () => {
+            const task = api.newTask('split');
+            const file = await createFileToAdd();
+
+            return task.start()
+            .then(task => {
+                return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+            })
+            .then(task => {
+                return task.addFile(file);
+            })
+            .then(task => {
+                return task.process();
+            })
+            .then(task =>{
+                return task.delete();
+            });
+        });
+
+        it('deletes a file', async () => {
+            const task = api.newTask('merge');
+            const file = await createFileToAdd();
+
+            expect(() => {
+                return task.start()
+                .then(task => {
+                    return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+                })
+                .then(task => {
+                    return task.addFile(file);
+                })
+                .then(task => {
+                    console.log('LOLASO');
+                    console.log(task.getFiles());
+                    return task.deleteFile(file);
+                })
+                .then(() => {
+                    return task.process();
+                });
+            })
+            .rejects.toThrow();
+        })
 
     });
 
