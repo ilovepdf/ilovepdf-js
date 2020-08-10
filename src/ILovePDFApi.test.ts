@@ -158,8 +158,6 @@ describe('ILovePDFApi', () => {
                     return task.addFile(file);
                 })
                 .then(task => {
-                    console.log('LOLASO');
-                    console.log(task.getFiles());
                     return task.deleteFile(file);
                 })
                 .then(() => {
