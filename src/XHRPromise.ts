@@ -25,7 +25,6 @@ export default class XHRPromise implements XHRInterface {
         return new Promise<T>(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
             xhr.open(method, url, true);
-            console.log(options);
             XHRPromise.setHeaders(xhr, options);
             XHRPromise.setEncoding(xhr, options);
 
@@ -82,8 +81,6 @@ export default class XHRPromise implements XHRInterface {
 
     private static setHeaders(xhr: XMLHttpRequest, options: Options = {}) {
         if (!!options.headers) {
-            // Mandatory to not have errors.
-            xhr.withCredentials = true;
 
             options.headers.forEach(([ key, value ]) => {
                 xhr.setRequestHeader(key, value);
