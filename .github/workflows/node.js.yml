@@ -16,14 +16,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [ 12.x ]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Clone @ilovepdf/ilovepdf-js
+      uses: actions/checkout@v2
+      with:
+        path: ./ilovepdf-js
+    - name: Clone @ilovepdf/ilovepdf-core
+      uses: actions/checkout@v2
+      with:
+        path: ./ilovepdf-core
+        repository: diego-ilovepdf/ilovepdf-core
+        token: ${{ secrets.token }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm run build --if-present
+      working-directory: ./ilovepdf-core
+    - run: npm run build
+      working-directory: ./ilovepdf-core
+    - run: npm ci
+      working-directory: ./ilovepdf-js
     - run: npm test
+      working-directory: ./ilovepdf-js
