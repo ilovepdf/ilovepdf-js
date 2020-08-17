@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "test": "jest ./src",
+    "test": "jest ./src --detectOpenHandles",
     "sample": "bash -c \"env SAMPLE=$0 webpack\""
   },
   "dependencies": {
