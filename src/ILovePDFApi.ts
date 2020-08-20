@@ -1,11 +1,13 @@
-import { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
-import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/dist/tasks/TaskFactory";
 import Auth from "@ilovepdf/ilovepdf-core/dist/auth/Auth";
 import JWT from "@ilovepdf/ilovepdf-core/dist/auth/JWT";
-import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
-import XHRPromise from "./XHRPromise";
-import XHRInterface from "@ilovepdf/ilovepdf-core/dist/utils/XHRInterface";
+import ILovePDFCoreApi, { UpdateSignerData } from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
+import { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
+import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/dist/tasks/TaskFactory";
 import TaskI from "@ilovepdf/ilovepdf-core/dist/tasks/TaskI";
+import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
+import GetSignerResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetSignerResponse";
+import XHRInterface from "@ilovepdf/ilovepdf-core/dist/utils/XHRInterface";
+import XHRPromise from "./XHRPromise";
 
 export interface ILovePDFApiI {
     /**
@@ -14,6 +16,12 @@ export interface ILovePDFApiI {
      * @param params - Parameters for the tool.
      */
     newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
+    /**
+     * Updates a signer that was processed and it is inside ILovePDF servers.
+     * @param signerToken - Token of the signer that has to be updated.
+     * @param data - Object with values to change.
+     */
+    updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
 }
 
 export default class ILovePDFApi implements ILovePDFApiI {
@@ -29,6 +37,10 @@ export default class ILovePDFApi implements ILovePDFApiI {
 
     public newTask(taskType: ILovePDFTool, params: TaskParams = {}): TaskI {
         return this.taskFactory.newTask(taskType, this.auth, this.xhr, params);
+    }
+
+    public async updateSigner(signerToken: string, data: UpdateSignerData) {
+        return ILovePDFCoreApi.updateSigner(this.auth, this.xhr, signerToken, data);
     }
 
 }

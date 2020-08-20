@@ -4,6 +4,10 @@ import dotenv from 'dotenv';
 import XHRPromise from "./XHRPromise";
 import MERGE from './tests/output/merge';
 import CONNECT from "./tests/output/connect";
+import ILovePDFCoreApi, { UpdateSignerData } from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
+import SignTask from '@ilovepdf/ilovepdf-core/dist/tasks/sign/SignTask';
+import SignatureFile from '@ilovepdf/ilovepdf-core/dist/tasks/sign/SignatureFile';
+import Signer from '@ilovepdf/ilovepdf-core/dist/tasks/sign/Signer';
 
 // Load env vars.
 dotenv.config();
@@ -12,7 +16,10 @@ const api = new ILovePDFApi(process.env.PUBLIC_KEY!);
 
 describe('ILovePDFApi', () => {
 
-    describe('Task', () => {
+    // Due to internal changes such as having different
+    // XHR system or File system task methods are also
+    // tested.
+    describe('newTask', () => {
 
         it('starts a task', () => {
             const task = api.newTask('merge');
@@ -166,6 +173,60 @@ describe('ILovePDFApi', () => {
             })
             .rejects.toThrow();
         })
+
+    });
+
+    describe('updateSigner', () => {
+
+        let task: SignTask;
+
+        beforeEach(() => {
+            // Create sign task to create a signer in servers.
+            task = api.newTask('sign') as SignTask;
+
+            return task.start()
+            .then(() => {
+                return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+            })
+            .then(() => {
+                // Requester.
+                task.requester = {
+                    name: 'Diego',
+                    email: 'req@ester.com'
+                };
+
+                // Signer.
+                const file = task.getFiles()[0];
+                const signatureFile = new SignatureFile(file, [{
+                    type: 'signature',
+                    position: '300 -100',
+                    pages: '1',
+                    size: 40,
+                    color: 'red',
+                    font: '',
+                    content: ''
+                }]);
+
+                const signer = new Signer('Diego Signer', 'invent@ado.com');
+                signer.addFile(signatureFile);
+                task.addSigner(signer);
+
+                return task.process();
+            });
+        });
+
+        it('updates a Signer', () => {
+            const { token } = task.signers[0];
+
+            const data: UpdateSignerData = {
+                name: 'Pepito'
+            };
+
+            return api.updateSigner(token, data)
+            .then(response => {
+                response.name === data.name;
+            });
+        });
 
     });
 
