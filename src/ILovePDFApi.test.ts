@@ -69,6 +69,21 @@ describe('ILovePDFApi', () => {
             });
         });
 
+        it('process a task with file_key_encryption', async () => {
+            const apiWithFileEncryption = new ILovePDFApi(process.env.PUBLIC_KEY!, { file_encryption_key: '01234567890123' });
+
+            const task = apiWithFileEncryption.newTask('compress');
+            const file = await createFileToAdd();
+
+            return task.start()
+            .then(() => {
+                return task.addFile(file);
+            })
+            .then(() => {
+                return task.process();
+            });
+        });
+
         it('downloads a pdf', async () => {
             const task = api.newTask('merge');
             const file = await createFileToAdd();

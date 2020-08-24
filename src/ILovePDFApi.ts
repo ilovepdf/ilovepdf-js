@@ -24,14 +24,18 @@ export interface ILovePDFApiI {
     updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
 }
 
+export type ILovePDFApiParams = {
+    file_encryption_key?: string
+};
+
 export default class ILovePDFApi implements ILovePDFApiI {
     private auth: Auth;
     private xhr: XHRInterface;
     private taskFactory: TaskFactoryI;
 
-    constructor(publicKey: string) {
+    constructor(publicKey: string, params: ILovePDFApiParams = {}) {
         this.xhr = new XHRPromise;
-        this.auth = new JWT(this.xhr, publicKey);
+        this.auth = new JWT(this.xhr, publicKey, undefined, params);
         this.taskFactory = new TaskFactory();
     }
 
