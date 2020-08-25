@@ -13,9 +13,8 @@ export interface ILovePDFApiI {
     /**
      * Creates a new task for a specific tool.
      * @param taskType - Task to run.
-     * @param params - Parameters for the tool.
      */
-    newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
+    newTask: (taskType: ILovePDFTool) => TaskI;
     /**
      * Updates a signer that was processed and it is inside ILovePDF servers.
      * @param signerToken - Token of the signer that has to be updated.
@@ -39,8 +38,8 @@ export default class ILovePDFApi implements ILovePDFApiI {
         this.taskFactory = new TaskFactory();
     }
 
-    public newTask(taskType: ILovePDFTool, params: TaskParams = {}): TaskI {
-        return this.taskFactory.newTask(taskType, this.auth, this.xhr, params);
+    public newTask(taskType: ILovePDFTool): TaskI {
+        return this.taskFactory.newTask(taskType, this.auth, this.xhr);
     }
 
     public async updateSigner(signerToken: string, data: UpdateSignerData) {
