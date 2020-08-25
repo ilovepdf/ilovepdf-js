@@ -4,10 +4,6 @@ import dotenv from 'dotenv';
 import XHRPromise from "./XHRPromise";
 import MERGE from './tests/output/merge';
 import CONNECT from "./tests/output/connect";
-import ILovePDFCoreApi, { UpdateSignerData } from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
-import SignTask from '@ilovepdf/ilovepdf-core/dist/tasks/sign/SignTask';
-import SignatureFile from '@ilovepdf/ilovepdf-core/dist/tasks/sign/SignatureFile';
-import Signer from '@ilovepdf/ilovepdf-core/dist/tasks/sign/Signer';
 
 // Load env vars.
 dotenv.config();
