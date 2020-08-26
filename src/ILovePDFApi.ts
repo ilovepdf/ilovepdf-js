@@ -8,6 +8,7 @@ import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
 import GetSignerResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetSignerResponse";
 import XHRInterface from "@ilovepdf/ilovepdf-core/dist/utils/XHRInterface";
 import XHRPromise from "./XHRPromise";
+import GetSignatureTemplateResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetSignatureTemplateResponse";
 
 export interface ILovePDFApiI {
     /**
@@ -16,11 +17,28 @@ export interface ILovePDFApiI {
      */
     newTask: (taskType: ILovePDFTool) => TaskI;
     /**
-     * Updates a signer that was processed and it is inside ILovePDF servers.
-     * @param signerToken - Token of the signer that has to be updated.
+     * Updates a signer that was also the requester in a signature process.
+     * @param signerToken - Signer token of the signer that has to be updated.
      * @param data - Object with values to change.
      */
     updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
+    /**
+     * Updates a signer email in a signature process.
+     * @param requesterToken - Request token of the signer that has to be updated.
+     * @param email - New email.
+     */
+    updateSignerEmail: (requesterToken: string, email: string) => Promise<GetSignerResponse>;
+    /**
+     * Updates a signer phone in a signature process.
+     * @param requesterToken - Request token of the signer that has to be updated.
+     * @param phone - New phone.
+     */
+    updateSignerPhone: (requesterToken: string, phone: string) => Promise<GetSignerResponse>;
+    /**
+     * Gets a template previously created.
+     * @param taskId - Task id of the task that created the template.
+     */
+    getSignatureTemplate: (taskId: string) => Promise<GetSignatureTemplateResponse>;
 }
 
 export type ILovePDFApiParams = {
@@ -44,6 +62,18 @@ export default class ILovePDFApi implements ILovePDFApiI {
 
     public async updateSigner(signerToken: string, data: UpdateSignerData) {
         return ILovePDFCoreApi.updateSigner(this.auth, this.xhr, signerToken, data);
+    }
+
+    public async updateSignerEmail(requesterToken: string, email: string) {
+        return ILovePDFCoreApi.updateSignerEmail(this.auth, this.xhr, requesterToken, email);
+    }
+
+    public async updateSignerPhone(requesterToken: string, phone: string) {
+        return ILovePDFCoreApi.updateSignerPhone(this.auth, this.xhr, requesterToken, phone);
+    }
+
+    public async getSignatureTemplate(taskId: string) {
+        return ILovePDFCoreApi.getSignatureTemplate(this.auth, this.xhr, taskId);
     }
 
 }
