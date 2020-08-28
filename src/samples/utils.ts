@@ -7,7 +7,7 @@ import XHRPromise from "../XHRPromise";
 export function createFileToAdd(filename: string, fileUrl: string): Promise<ILovePDFFile> {
     const xhr = new XHRPromise();
 
-    return xhr.get<string>(fileUrl, { binary: true })
+    return xhr.get<string>(`https://cors-anywhere.herokuapp.com/${ fileUrl }`, { binary: true })
     .then(response => {
         const blob = new Blob([ response ]);
         const nativeFile = new File([ blob ], filename);
