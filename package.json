@@ -7,7 +7,7 @@
   ],
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json",
     "test": "jest ./src --detectOpenHandles",
     "sample": "bash -c \"env SAMPLE=$0 webpack\""
   },
