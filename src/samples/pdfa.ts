@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import PdfaTask from '@ilovepdf/ilovepdf-core/dist/tasks/PdfaTask';
+import PdfaTask from '@ilovepdf/ilovepdf-core/tasks/PdfaTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

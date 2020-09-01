@@ -1,4 +1,4 @@
-import BaseFile, { BaseFileParams } from "@ilovepdf/ilovepdf-core/dist/tasks/BaseFile";
+import BaseFile, { BaseFileParams } from "@ilovepdf/ilovepdf-core/tasks/BaseFile";
 
 export default class ILovePDFFile extends BaseFile {
     private file: File;

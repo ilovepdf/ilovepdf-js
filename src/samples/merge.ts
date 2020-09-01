@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import MergeTask from '@ilovepdf/ilovepdf-core/dist/tasks/MergeTask';
+import MergeTask from '@ilovepdf/ilovepdf-core/tasks/MergeTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

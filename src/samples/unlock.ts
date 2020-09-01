@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import UnlockTask from '@ilovepdf/ilovepdf-core/dist/tasks/UnlockTask';
+import UnlockTask from '@ilovepdf/ilovepdf-core/tasks/UnlockTask';
 import { createFileToAdd, createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');
