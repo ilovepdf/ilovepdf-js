@@ -1,15 +1,20 @@
 {
   "name": "@ilovepdf/ilovepdf-js",
+  "author": {
+    "email": "info@ilovepdf.com",
+    "name": "ILOVEPDF S.L.",
+    "url": "https://developer.ilovepdf.com/"
+  },
+  "license": "MIT",
+  "description": "ILovePDF Api - JS Library",
   "version": "0.1.0",
   "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
   "private": true,
   "scripts": {
     "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json",
     "test": "jest ./src --detectOpenHandles",
-    "sample": "bash -c \"env SAMPLE=$0 webpack\""
+    "sample": "bash -c \"env SAMPLE=$0 webpack\"",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "@ilovepdf/ilovepdf-core": "file:../ilovepdf-core/dist"
