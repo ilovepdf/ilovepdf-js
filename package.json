@@ -9,7 +9,6 @@
   "description": "ILovePDF Api - JS Library",
   "version": "0.1.0",
   "main": "dist/index.js",
-  "private": true,
   "scripts": {
     "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json && cp README.md ./dist",
     "test": "jest ./src --detectOpenHandles",
