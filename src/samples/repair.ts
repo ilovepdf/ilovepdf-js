@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import RepairTask from '@ilovepdf/ilovepdf-core/tasks/RepairTask';
+import RepairTask from '@ilovepdf/ilovepdf-js-core/tasks/RepairTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import ProtectTask from '@ilovepdf/ilovepdf-core/tasks/ProtectTask';
+import ProtectTask from '@ilovepdf/ilovepdf-js-core/tasks/ProtectTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

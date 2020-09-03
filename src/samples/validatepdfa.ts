@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import ValidatePdfaTask from '@ilovepdf/ilovepdf-core/tasks/ValidatePdfaTask';
+import ValidatePdfaTask from '@ilovepdf/ilovepdf-js-core/tasks/ValidatePdfaTask';
 import { createFileToAdd } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

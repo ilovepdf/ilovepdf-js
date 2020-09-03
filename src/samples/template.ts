@@ -1,6 +1,6 @@
-import SignatureFile from "@ilovepdf/ilovepdf-core/tasks/sign/SignatureFile";
-import Signer from "@ilovepdf/ilovepdf-core/tasks/sign/Signer";
-import SignTask from "@ilovepdf/ilovepdf-core/tasks/sign/SignTask";
+import SignatureFile from "@ilovepdf/ilovepdf-js-core/tasks/sign/SignatureFile";
+import Signer from "@ilovepdf/ilovepdf-js-core/tasks/sign/Signer";
+import SignTask from "@ilovepdf/ilovepdf-js-core/tasks/sign/SignTask";
 import ILovePDFApi from "..";
 
 const api = new ILovePDFApi('<PUBLIC_KEY>');

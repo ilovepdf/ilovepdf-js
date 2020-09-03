@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import RotateTask from '@ilovepdf/ilovepdf-core/tasks/RotateTask';
+import RotateTask from '@ilovepdf/ilovepdf-js-core/tasks/RotateTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import CompressTask from '@ilovepdf/ilovepdf-core/tasks/CompressTask';
+import CompressTask from '@ilovepdf/ilovepdf-js-core/tasks/CompressTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

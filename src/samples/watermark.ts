@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import WatermarkTask from '@ilovepdf/ilovepdf-core/tasks/WatermarkTask';
+import WatermarkTask from '@ilovepdf/ilovepdf-js-core/tasks/WatermarkTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

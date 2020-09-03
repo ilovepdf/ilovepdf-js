@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import ExtractTask from '@ilovepdf/ilovepdf-core/tasks/ExtractTask';
+import ExtractTask from '@ilovepdf/ilovepdf-js-core/tasks/ExtractTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');

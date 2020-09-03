@@ -1,4 +1,4 @@
-import XHRInterface, { XHROptions } from '@ilovepdf/ilovepdf-core/utils/XHRInterface';
+import XHRInterface, { XHROptions } from '@ilovepdf/ilovepdf-js-core/utils/XHRInterface';
 import ILovePDFFile from './ILovePDFFile';
 
 export default class XHRPromise implements XHRInterface {

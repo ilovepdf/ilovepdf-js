@@ -11,13 +11,12 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json",
+    "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json && cp README.md ./dist",
     "test": "jest ./src --detectOpenHandles",
-    "sample": "bash -c \"env SAMPLE=$0 webpack\"",
-    "prepublish": "npm run build"
+    "upload-npm": "npm test && npm run build && cd ./dist && npm publish --access public"
   },
   "dependencies": {
-    "@ilovepdf/ilovepdf-core": "file:../ilovepdf-core/dist"
+    "@ilovepdf/ilovepdf-js-core": "^0.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
@@ -35,5 +34,21 @@
   },
   "jest": {
     "testTimeout": 10000
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilovepdf/ilovepdf-js"
+  },
+  "keywords": [
+    "pdf",
+    "library",
+    "tool",
+    "merge",
+    "split",
+    "compress",
+    "convert",
+    "api",
+    "frontend",
+    "js"
+  ]
 }

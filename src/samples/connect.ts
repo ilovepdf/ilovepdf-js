@@ -1,5 +1,5 @@
 import ILovePDFApi from "..";
-import SplitTask from '@ilovepdf/ilovepdf-core/tasks/SplitTask';
+import SplitTask from '@ilovepdf/ilovepdf-js-core/tasks/SplitTask';
 import { createObjectUrl } from "./utils";
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>');
