@@ -12,8 +12,7 @@ task.start()
     const file = await createFileToAdd('file.pdf', '<FILE_URL>');
     return task.addFile(file);
 })
-.then(() => {
-    const file = task.getFiles()[0];
+.then(file => {
     file.params.password = 'test';
 
     return task.process();
