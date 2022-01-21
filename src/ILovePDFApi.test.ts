@@ -17,35 +17,26 @@ describe('ILovePDFApi', () => {
     // tested.
     describe('newTask', () => {
 
-        it('starts a task', () => {
+        it('starts a task', async () => {
             const task = api.newTask('merge');
-
-            return task.start()
-            .then((sameTask) => {
-
-                expect(sameTask === task).toBeTruthy();
-            });
+            await task.start();
         });
 
-        it('adds a file from URL', () => {
+        it('adds a file from URL', async () => {
             const task = api.newTask('merge');
 
-            return task.start()
-            .then(() => {
-                return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-            });
+            await task.start()
+
+            await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
         });
 
-        it('adds a file from ILovePDFFile', () => {
+        it('adds a file from ILovePDFFile', async () => {
             const task = api.newTask('merge');
 
-            return task.start()
-            .then(() => {
-                return createFileToAdd();
-            })
-            .then(file => {
-                return task.addFile(file);
-            });
+            await task.start()
+
+            const file = await createFileToAdd();
+            await task.addFile(file);
         });
 
         it('process a merge', async () => {
@@ -95,77 +86,60 @@ describe('ILovePDFApi', () => {
 
         it('connects a task', async () => {
             const task = api.newTask('split');
-            const file = await createFileToAdd();
 
-            return task.start()
-            .then(task => {
-                return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-            })
-            .then(task => {
-                return task.addFile(file);
-            })
-            .then(task => {
-                return task.process();
-            })
-            .then(task =>{
-                return task.connect('merge');
-            })
-            .then((connectedTask) => {
-                return connectedTask.addFile(file);
-            })
-            .then((connectedTask) => {
-                return connectedTask.process()
-            })
-            .then((connectedTask) => {
-                return connectedTask.download();
-            })
-            .then(data => {
-                // Cast to native ArrayBuffer because is not only a simple string.
-                const buffer = data as unknown as ArrayBuffer;
-                const utf8String = arrayBufferToString(buffer);
-                const ut8WithoutMetas = removePDFUniqueMetadata(utf8String);
-                const base64 = btoa(ut8WithoutMetas);
-                expect(base64).toBe(CONNECT);
-            });
+            await task.start();
+
+            await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+
+            const file = await createFileToAdd();
+            await task.addFile(file);
+
+            await task.process();
+
+            const connectedTask = await task.connect('merge');
+
+            await connectedTask.addFile(file);
+
+            await connectedTask.process()
+
+            const data = await connectedTask.download();
+
+            // Cast to native ArrayBuffer because is not only a simple string.
+            const buffer = data as unknown as ArrayBuffer;
+            const utf8String = arrayBufferToString(buffer);
+            const ut8WithoutMetas = removePDFUniqueMetadata(utf8String);
+            const base64 = btoa(ut8WithoutMetas);
+            expect(base64).toBe(CONNECT);
         });
 
         it('deletes a task', async () => {
             const task = api.newTask('split');
-            const file = await createFileToAdd();
 
-            return task.start()
-            .then(task => {
-                return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-            })
-            .then(task => {
-                return task.addFile(file);
-            })
-            .then(task => {
-                return task.process();
-            })
-            .then(task =>{
-                return task.delete();
-            });
+            await task.start()
+
+            await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+
+            const file = await createFileToAdd();
+            await task.addFile(file);
+
+            await task.process();
+
+            await task.delete();
         });
 
         it('deletes a file', async () => {
-            const task = api.newTask('merge');
-            const file = await createFileToAdd();
+            expect(async () => {
+                const task = api.newTask('merge');
+                await task.start()
 
-            expect(() => {
-                return task.start()
-                .then(task => {
-                    return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
-                })
-                .then(task => {
-                    return task.addFile(file);
-                })
-                .then(task => {
-                    return task.deleteFile(file);
-                })
-                .then(() => {
-                    return task.process();
-                });
+                await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+
+                const file = await createFileToAdd();
+                await task.addFile(file);
+
+                await task.deleteFile(file);
+
+                await task.process();
             })
             .rejects.toThrow();
         })
