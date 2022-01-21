@@ -5,6 +5,10 @@ import XHRPromise from "./XHRPromise";
 import MERGE from './tests/output/merge';
 import CONNECT from "./tests/output/connect";
 
+// IMPORTANT: FOR TESTING PURPOSES WE USE CORS-ANYWHERE.
+// IS A SERVICE WHICH NEEDS TO BE ENABLED AT
+// https://cors-anywhere.herokuapp.com .
+
 // Load env vars.
 dotenv.config();
 
