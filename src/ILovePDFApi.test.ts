@@ -22,6 +22,11 @@ describe('ILovePDFApi', () => {
             await task.start();
         });
 
+        it('starts a signature task', async () => {
+            const task = api.newTask('sign');
+            await task.start();
+        });
+
         it('adds a file from URL', async () => {
             const task = api.newTask('merge');
 
