@@ -30,15 +30,29 @@ export default class XHRPromise implements XHRInterface {
 
             // Success handling.
             xhr.onload = function () {
+                // Success case.
                 if (this.status >= 200 && this.status < 300) {
                     // Transform response if it was configured.
                     const { transformResponse } = options;
                     const response = !!transformResponse ? transformResponse(this.response) : this.response;
 
                     resolve(response);
+                    return;
+                }
+
+                // Failure cases.
+
+                // Binary enabled but with error. I do this due to inside a browser
+                // DOM after a binary download error, the state of xhr is invalid and
+                // can cause other errors if the object is examinated.
+                if (XHRPromise.isBinary(options)) {
+                    reject({
+                        status: this.status,
+                        statusText: 'File could not be downloaded.',
+                    });
+                    return;
                 }
                 else {
-                    // Error but with response.
                     const parsedResponse = JSON.parse(this.responseText);
                     // Servers haven't got a unique error response.
                     const { error, name, message } = parsedResponse;
@@ -92,7 +106,11 @@ export default class XHRPromise implements XHRInterface {
 
     private static setEncoding(xhr: XMLHttpRequest, options: XHROptions = {}) {
         // Enable arraybuffer as a return type when binary is enabled.
-        if (!!options.binary) xhr.responseType = 'arraybuffer';
+        if ( XHRPromise.isBinary(options) ) xhr.responseType = 'arraybuffer';
     };
+
+    private static isBinary(options: XHROptions): boolean {
+        return !!options.binary;
+    }
 
 }
