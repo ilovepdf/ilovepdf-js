@@ -35,7 +35,7 @@
     "serialize-javascript": ">=3.1.0"
   },
   "jest": {
-    "testTimeout": 10000
+    "testTimeout": 20000
   },
   "repository": {
     "type": "git",
