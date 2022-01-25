@@ -189,9 +189,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -201,11 +198,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const { token_requester } = await task.process();
 
             const { signers } = await api.getSignatureStatus(token_requester);
 
@@ -227,9 +220,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             let signer = new Signer('Manolo', 'invent@ado.com', {
@@ -239,11 +229,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            await task.process();
 
             // Second task.
 
@@ -259,9 +245,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             signer = new Signer('Paquito', 'invent@ado.com', {
@@ -271,11 +254,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            await task.process();
 
             const signatureList = await api.getSignatureList(0, 2);
 
@@ -300,9 +279,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -312,11 +288,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const { token_requester } = await task.process();
 
             // Wait to send emails due to this is made
             // in background.
@@ -347,9 +319,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -359,11 +328,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const { token_requester } = await task.process();
 
             // Increase expiration days.
             const INCREASED_DAYS = 3;
@@ -395,9 +360,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -407,11 +369,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const { token_requester } = await task.process();
 
             // Wait to send emails due to this is made
             // in background.
@@ -441,9 +399,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -453,11 +408,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const { token_requester } = await task.process();
 
             const rawData = await api.downloadOriginalFiles(token_requester);
 
@@ -477,9 +428,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -489,11 +437,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const { token_requester } = await task.process();
 
             // We can't test downloaded data due to the signature is not finished.
             // But we want to test that the connection was successful, so the
@@ -514,9 +458,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -526,12 +467,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0',
-                certified: true,
-            });
+            const { token_requester } = await task.process();
 
             // We can't test downloaded data due to the signature is not finished.
             // But we want to test that the connection was successful, so the
@@ -553,9 +489,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -565,11 +498,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const result = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const result = await task.process();
 
             const processedSigner = result.signers[0];
             const { token_requester } = processedSigner;
@@ -593,9 +522,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -605,11 +531,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const result = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const result = await task.process();
 
             const processedSigner = result.signers[0];
             const { token_requester } = processedSigner;
@@ -639,9 +561,6 @@ describe('ILovePDFApi', () => {
                 position: '300 -100',
                 pages: '1',
                 size: 28,
-                color: '#000000',
-                font: null as unknown as string,
-                content: null as unknown as string
             }]);
 
             const signer = new Signer('Diego Signer', 'invent@ado.com', {
@@ -651,11 +570,7 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const result = await task.process({
-                mode: 'multiple',
-                custom_int: 0,
-                custom_string: '0'
-            });
+            const result = await task.process();
 
             const processedSigner = result.signers[0];
             const { token_requester } = processedSigner;
