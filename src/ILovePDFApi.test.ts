@@ -86,9 +86,7 @@ describe('ILovePDFApi', () => {
                 return task.download();
             })
             .then(data => {
-                // Cast to native ArrayBuffer because is not only a simple string.
-                const buffer = data as unknown as ArrayBuffer;
-                const utf8String = arrayBufferToString(buffer);
+                const utf8String = arrayBufferToString(data);
                 const ut8WithoutMetas = removePDFUniqueMetadata(utf8String);
                 const base64 = btoa(ut8WithoutMetas);
 
@@ -117,8 +115,7 @@ describe('ILovePDFApi', () => {
             const data = await connectedTask.download();
 
             // Cast to native ArrayBuffer because is not only a simple string.
-            const buffer = data as unknown as ArrayBuffer;
-            const utf8String = arrayBufferToString(buffer);
+            const utf8String = arrayBufferToString(data);
             const ut8WithoutMetas = removePDFUniqueMetadata(utf8String);
             const base64 = btoa(ut8WithoutMetas);
             expect(base64).toBe(CONNECT);
@@ -150,7 +147,9 @@ describe('ILovePDFApi', () => {
 
             await task.deleteFile(file);
 
-            await task.process();
+            // Rejects cause it can't be processed
+            // if tries to merge only one file.
+            expect( () => task.process() ).rejects;
         })
 
     });
@@ -412,7 +411,7 @@ describe('ILovePDFApi', () => {
 
             const rawData = await api.downloadOriginalFiles(token_requester);
 
-            expect((rawData as unknown as ArrayBuffer).byteLength).toBeGreaterThan(0);
+            expect(rawData.length).toBeGreaterThan(0);
         });
 
         it('downloads signed files', async () => {
@@ -619,7 +618,7 @@ async function createFileToAdd(): Promise<ILovePDFFile> {
     })
 }
 
-function arrayBufferToString(buffer: ArrayBuffer): string {
+function arrayBufferToString(buffer: Uint8Array): string {
     let str = '';
 
     var byteArray = new Uint8Array(buffer);

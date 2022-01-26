@@ -22,7 +22,7 @@ export function createFileToAdd(filename: string, fileUrl: string): Promise<ILov
  * @param data - Data to download with the returned url.
  * @param type - HTTP data type. Example: application/pdf.
  */
-export function createObjectUrl(data: string, type: string): string {
+export function createObjectUrl(data: Uint8Array, type: string): string {
     const blob = new Blob([ data ], { type });
     const objectUrl = URL.createObjectURL(blob);
 
