@@ -411,7 +411,7 @@ describe('ILovePDFApi', () => {
 
             const rawData = await api.downloadOriginalFiles(token_requester);
 
-            expect(rawData.length).toBeGreaterThan(0);
+            expect(rawData.byteLength).toBeGreaterThan(0);
         });
 
         it('downloads signed files', async () => {
