@@ -1,5 +1,6 @@
 import XHRInterface, { XHROptions } from '@ilovepdf/ilovepdf-js-core/utils/XHRInterface';
 import ILovePDFFile from './ILovePDFFile';
+import BaseFile from '@ilovepdf/ilovepdf-js-core/tasks/BaseFile';
 
 export default class XHRPromise implements XHRInterface {
 
@@ -9,7 +10,10 @@ export default class XHRPromise implements XHRInterface {
 
     public post<T>(url: string, data?: any, options: XHROptions = {}) {
         // If there is a file, it needs to retrieve native data.
-        const parsedData = data instanceof ILovePDFFile ? data.data : data;
+        // Note: I use `instanceof BaseFile` because it seems that the
+        // prototype chain is broken and it's detected as false with `ILovePDFFile`.
+        // To fix it, I need to waste many time.
+        const parsedData = data instanceof BaseFile ? ( data as ILovePDFFile ).data : data;
         return XHRPromise.makeRequest<T>('POST', url, parsedData, options);
     }
 
@@ -46,6 +50,7 @@ export default class XHRPromise implements XHRInterface {
                 // DOM after a binary download error, the state of xhr is invalid and
                 // can cause other errors if the object is examinated.
                 if (XHRPromise.isBinary(options)) {
+                    console.error( this )
                     reject({
                         status: this.status,
                         statusText: 'File could not be downloaded.',
@@ -70,6 +75,8 @@ export default class XHRPromise implements XHRInterface {
                         statusText = `${ name } - ${ message }`;
                     }
 
+                    console.error( parsedResponse )
+
                     reject({
                         status,
                         statusText
@@ -79,6 +86,7 @@ export default class XHRPromise implements XHRInterface {
 
             // Error handling.
             xhr.onerror = function () {
+                console.error( this )
                 reject({
                     status: this.status,
                     statusText: this.statusText
