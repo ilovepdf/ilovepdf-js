@@ -1,6 +1,5 @@
 import XHRInterface, { XHROptions } from '@ilovepdf/ilovepdf-js-core/utils/XHRInterface';
 import ILovePDFFile from './ILovePDFFile';
-import BaseFile from '@ilovepdf/ilovepdf-js-core/tasks/BaseFile';
 
 export default class XHRPromise implements XHRInterface {
 
@@ -10,10 +9,7 @@ export default class XHRPromise implements XHRInterface {
 
     public post<T>(url: string, data?: any, options: XHROptions = {}) {
         // If there is a file, it needs to retrieve native data.
-        // Note: I use `instanceof BaseFile` because it seems that the
-        // prototype chain is broken and it's detected as false with `ILovePDFFile`.
-        // To fix it, I need to waste many time.
-        const parsedData = data instanceof BaseFile ? ( data as ILovePDFFile ).data : data;
+        const parsedData = typeof data === 'string' ? data : ( data as ILovePDFFile ).data;
         return XHRPromise.makeRequest<T>('POST', url, parsedData, options);
     }
 
