@@ -51,6 +51,16 @@ describe('ILovePDFApi', () => {
             await task.addFile(file);
         });
 
+        it('gets the remaining files', async () => {
+            const task = api.newTask('merge');
+
+            await task.start()
+
+            // Be careful with this test. In case of being an admin, `remainingFiles`
+            // is `undefined` due to they have no limits.
+            expect(typeof task.remainingFiles === 'number').toBeTruthy();
+        });
+
         it('does not get the pdfinfo', async () => {
             const task = api.newTask('merge');
 
@@ -89,8 +99,6 @@ describe('ILovePDFApi', () => {
 
             const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', { info: true });
 
-            // Be careful with this test. In case of being an admin, `remainingFiles`
-            // is `undefined` due to they have no limits.
             expect(file.info).toBeDefined();
         });
 
