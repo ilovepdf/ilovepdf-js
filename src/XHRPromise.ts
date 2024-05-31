@@ -99,13 +99,12 @@ export default class XHRPromise implements XHRInterface {
 
     private static setHeaders(xhr: XMLHttpRequest, options: XHROptions = {}) {
         if (!!options.headers) {
-
             options.headers.forEach(([ key, value ]) => {
                 xhr.setRequestHeader(key, value);
             });
-
         }
-
+        // Some services such as CORS anywhere requires this.
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     }
 
     private static setEncoding(xhr: XMLHttpRequest, options: XHROptions = {}) {
