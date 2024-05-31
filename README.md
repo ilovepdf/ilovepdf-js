@@ -76,7 +76,7 @@ const task = instance.newTask('merge');
 
 task.start()
 .then(() => {
-    const inputElement = document.getElementById('file-element') as HTMLInputElement;
+    const inputElement = document.getElementById('file-element');
     const file = new ILovePDFFile(inputElement.files![0]);
 
     return task.addFile(file);
@@ -100,13 +100,60 @@ task.start()
 Thanks to be a promise-based API it is possible use the `await` JavaScript operator in order to call Task methods. Here you have an example:
 
 ```js
-    let task = instance.newTask('merge');
-    task = await task.start();
-    task = await task.addFile('<PDF_URL1>');
-    task = await task.addFile('<PDF_URL2>');
-    task = await task.process();
+let task = instance.newTask('merge');
+task = await task.start();
+task = await task.addFile('<PDF_URL1>');
+task = await task.addFile('<PDF_URL2>');
+task = await task.process();
 
-    const data = await task.download();
+const data = await task.download();
+```
+
+### Get PDF information
+
+On upload a file from an `<input type="input">` or URL, you will have access to some PDF information:
+
+```js
+import ILovePDFApi from '@ilovepdf/ilovepdf-js';
+import ILovePDFFile from '@ilovepdf/ilovepdf-js/ILovePDFFile';
+
+const instance = new ILovePDFApi('<PUBLIC_KEY>');
+
+const task = instance.newTask('merge');
+
+task.start()
+.then(() => {
+    // File from browser input element.
+    const inputElement = document.getElementById('file-element');
+    const file = new ILovePDFFile(inputElement.files![0]);
+
+    return task.addFile(file);
+})
+.then(file1 => {
+    // Access to PDF information.
+    // file1.pageNumber
+    // file1.pageSizes
+
+    // File from URL.
+    return task.addFile('<PDF_URL2>');
+})
+.then(file2 => {
+    // Access to PDF information.
+    // file2.pageNumber
+    // file2.pageSizes
+});
+```
+
+### Get remaining files
+
+Due to this library is limited by number of uses, you can access to the account remaining files:
+
+```js
+const task = instance.newTask('merge');
+await task.start();
+// After start a task, you can access to the remaining files quantity.
+// Before, it's `undefined`.
+console.log( task.remainingFiles )
 ```
 
 ## Documentation
