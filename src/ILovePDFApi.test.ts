@@ -51,6 +51,60 @@ describe('ILovePDFApi', () => {
             await task.addFile(file);
         });
 
+        it('does not get the pdfinfo', async () => {
+            const task = api.newTask('merge');
+
+            await task.start()
+
+            const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+
+            expect(file.info).toBeUndefined();
+        });
+
+        it('does not get the pdfinfo with local file', async () => {
+            const task = api.newTask('merge');
+
+            await task.start()
+
+            const file = await createFileToAdd();
+            await task.addFile(file);
+
+            expect(file.info).toBeUndefined();
+        });
+
+        it('does not get the pdfinfo if specified', async () => {
+            const task = api.newTask('merge');
+
+            await task.start()
+
+            const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', { info: false });
+
+            expect(file.info).toBeUndefined();
+        });
+
+        it('gets the pdfinfo if specified', async () => {
+            const task = api.newTask('merge');
+
+            await task.start()
+
+            const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', { info: true });
+
+            // Be careful with this test. In case of being an admin, `remainingFiles`
+            // is `undefined` due to they have no limits.
+            expect(file.info).toBeDefined();
+        });
+
+        it('gets the pdfinfo if specified with file', async () => {
+            const task = api.newTask('merge');
+
+            await task.start()
+
+            const file = await createFileToAdd();
+            await task.addFile(file, { info: true });
+
+            expect(file.info).toBeDefined();
+        });
+
         it('process a merge', async () => {
             const task = api.newTask('merge');
             const file = await createFileToAdd();
