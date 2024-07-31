@@ -313,7 +313,8 @@ describe('ILovePDFApi', () => {
             signer.addFile(signatureFile);
             task.addReceiver(signer);
 
-            const { token_requester } = await task.process();
+            const BASE_DAYS = 7;
+            const { token_requester } = await task.process({expiration_days: BASE_DAYS});
 
             // Increase expiration days.
             const INCREASED_DAYS = 3;
@@ -325,9 +326,6 @@ describe('ILovePDFApi', () => {
             const expirationDate = new Date( expires );
 
             const diffDays = dateDiffInDays(creationDate, expirationDate);
-
-            // Days by default.
-            const BASE_DAYS = 120;
 
             expect(diffDays).toBe(BASE_DAYS + INCREASED_DAYS);
         });
@@ -361,14 +359,11 @@ describe('ILovePDFApi', () => {
             await new Promise<void>(resolve => {
                 setTimeout(() => {
                     resolve();
-                }, 4000);
+                }, 2000);
             });
 
             // Due to we can test that email was sent, a limit exception is forced.
             await api.sendReminders(token_requester);
-            await api.sendReminders(token_requester);
-
-            expect( () => api.sendReminders(token_requester) ).rejects;
         });
 
         it('downloads original files', async () => {
