@@ -6,6 +6,7 @@ import TaskI from "@ilovepdf/ilovepdf-js-core/tasks/TaskI";
 import ILovePDFTool from "@ilovepdf/ilovepdf-js-core/types/ILovePDFTool";
 import XHRInterface from "@ilovepdf/ilovepdf-js-core/utils/XHRInterface";
 import XHRPromise from "./XHRPromise";
+import SignatureStatus from "@ilovepdf/ilovepdf-js-core/types/responses/SignatureStatus";
 
 export interface ILovePDFApiI {
     /**
@@ -26,7 +27,7 @@ export interface ILovePDFApiI {
      * @param pageLimit Limit of objects per page.
      * @returns List of signatures.
      */
-    getSignatureList: (page: number, pageLimit: number) => Promise<Array<GetSignatureStatus>>;
+    getSignatureList: (page: number, pageLimit: number, filters: SignatureListFilters) => Promise<Array<GetSignatureStatus>>;
     /**
      * Voids a non-completed signature.
      * @param signatureToken token_requester property from a created signature.
@@ -115,8 +116,8 @@ export default class ILovePDFApi implements ILovePDFApiI {
     /**
      * @inheritdoc
      */
-    async getSignatureList(page: number = 0, pageLimit: number = 20): Promise<Array<GetSignatureStatus>> {
-        return ILovePDFCoreApi.getSignatureList(this.auth, this.xhr, page, pageLimit);
+    async getSignatureList(page: number = 0, pageLimit: number = 20, filters: SignatureListFilters = {}): Promise<Array<GetSignatureStatus>> {
+        return ILovePDFCoreApi.getSignatureList(this.auth, this.xhr, page, pageLimit, filters);
     }
 
     /**
@@ -182,4 +183,13 @@ export default class ILovePDFApi implements ILovePDFApiI {
         return ILovePDFCoreApi.fixReceiverPhone(this.auth, this.xhr, receiverTokenRequester, phone);
     }
 
+}
+
+type SignatureListFilters = {
+    text?: string;
+    status?: SignatureStatus;
+    sort_field?: 'created' | 'filename';
+    sort_direction?: 'asc' | 'desc';
+    created_more_than?: string;
+    created_less_than?: string;
 }

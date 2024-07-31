@@ -9,7 +9,7 @@ export default class XHRPromise implements XHRInterface {
 
     public post<T>(url: string, data?: any, options: XHROptions = {}) {
         // If there is a file, it needs to retrieve native data.
-        const parsedData = typeof data === 'string' ? data : ( data as ILovePDFFile ).data;
+        const parsedData = typeof data === 'string' || typeof data === 'undefined' ? data : ( data as ILovePDFFile ).data;
         return XHRPromise.makeRequest<T>('POST', url, parsedData, options);
     }
 
@@ -46,7 +46,6 @@ export default class XHRPromise implements XHRInterface {
                 // DOM after a binary download error, the state of xhr is invalid and
                 // can cause other errors if the object is examinated.
                 if (XHRPromise.isBinary(options)) {
-                    console.error( this )
                     reject({
                         status: this.status,
                         statusText: 'File could not be downloaded.',
@@ -71,8 +70,6 @@ export default class XHRPromise implements XHRInterface {
                         statusText = `${ name } - ${ message }`;
                     }
 
-                    console.error( parsedResponse )
-
                     reject({
                         status,
                         statusText
@@ -82,7 +79,6 @@ export default class XHRPromise implements XHRInterface {
 
             // Error handling.
             xhr.onerror = function () {
-                console.error( this )
                 reject({
                     status: this.status,
                     statusText: this.statusText
