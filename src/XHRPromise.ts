@@ -99,8 +99,6 @@ export default class XHRPromise implements XHRInterface {
                 xhr.setRequestHeader(key, value);
             });
         }
-        // Some services such as CORS anywhere requires this.
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     }
 
     private static setEncoding(xhr: XMLHttpRequest, options: XHROptions = {}) {
