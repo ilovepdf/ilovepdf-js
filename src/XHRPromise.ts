@@ -9,7 +9,7 @@ export default class XHRPromise implements XHRInterface {
 
     public post<T>(url: string, data?: any, options: XHROptions = {}) {
         // If there is a file, it needs to retrieve native data.
-        const parsedData = typeof data === 'string' ? data : ( data as ILovePDFFile ).data;
+        const parsedData = typeof data === 'string' || typeof data === 'undefined' ? data : ( data as ILovePDFFile ).data;
         return XHRPromise.makeRequest<T>('POST', url, parsedData, options);
     }
 
